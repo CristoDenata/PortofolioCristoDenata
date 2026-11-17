@@ -60,7 +60,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observer untuk cards dan content
-document.querySelectorAll('.project-card, .skill-card, .about-grid, .floating-card, .contact-card').forEach(el => {
+document.querySelectorAll('.project-card, .skill-card, .about-grid, .floating-card, .contact-card, .achievement-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'all 0.6s ease';
@@ -360,11 +360,14 @@ document.addEventListener('keydown', (e) => {
 window.addEventListener('load', () => {
     document.body.style.opacity = '1';
     
-    // Initial animations
+    // Initial animations (hero only; guarded so achievements page won't error)
     setTimeout(() => {
-        document.querySelector('.hero-text h1').style.animation = 'slideInLeft 0.8s ease-out';
-        document.querySelector('.hero-text p').style.animation = 'slideInLeft 0.8s ease-out 0.2s backwards';
-        document.querySelector('.cta-buttons').style.animation = 'slideInUp 0.8s ease-out 0.4s backwards';
+        const heroH1 = document.querySelector('.hero-text h1');
+        const heroP = document.querySelector('.hero-text p');
+        const cta = document.querySelector('.cta-buttons');
+        if (heroH1) heroH1.style.animation = 'slideInLeft 0.8s ease-out';
+        if (heroP) heroP.style.animation = 'slideInLeft 0.8s ease-out 0.2s backwards';
+        if (cta) cta.style.animation = 'slideInUp 0.8s ease-out 0.4s backwards';
     }, 100);
 });
 
