@@ -93,6 +93,61 @@ body {
     width: 100%;
 }
 
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 1100;
+}
+
+.hamburger-line {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: var(--text-muted);
+    border-radius: 3px;
+    transition: all 0.28s ease;
+    transform-origin: center;
+}
+
+.nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(15, 20, 25, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    gap: 0;
+}
+
+.nav-links.open .nav-link {
+    padding: 0.9rem 2rem;
+    border-top: 1px dashed rgba(168, 185, 209, 0.15);
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero {
     margin-top: 60px;
@@ -1063,12 +1118,20 @@ body.achievements-page .achievement-card:hover .card-icon {
         padding: 0.8rem 1.5rem;
     }
 
+    .hamburger {
+        display: flex;
+    }
+
     .nav-links {
-        gap: 1.5rem;
+        display: none;
+    }
+
+    .nav-links.open {
+        display: flex;
     }
 
     .nav-link {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 
     .hero {

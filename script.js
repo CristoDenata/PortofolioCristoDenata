@@ -294,54 +294,46 @@ document.querySelectorAll('.stat').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-// Mobile menu toggle
+// Mobile menu toggle (hamburger)
 const navLinks = document.querySelector('.nav-links');
-const mobileToggle = document.createElement('button');
-mobileToggle.className = 'mobile-toggle';
-mobileToggle.innerHTML = `
-    <span></span>
-    <span></span>
-    <span></span>
-`;
-mobileToggle.style.cssText = `
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-`;
+const hamburger = document.querySelector('.hamburger');
 
-if (window.innerWidth <= 768) {
-    mobileToggle.style.display = 'flex';
-    navLinks.style.display = 'none';
-    navLinks.classList.add('mobile-menu');
+if (hamburger && navLinks) {
+    const closeMenu = () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+    };
+
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('active', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Tutup menu setelah link diklik
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Klik di luar menu menutup menu
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // Reset saat resize ke desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+
+    // Tutup dengan tombol Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+    });
 }
-
-window.addEventListener('resize', () => {
-    if (window.innerWidth <= 768) {
-        mobileToggle.style.display = 'flex';
-    } else {
-        mobileToggle.style.display = 'none';
-        navLinks.style.display = 'flex';
-        navLinks.classList.remove('mobile-menu');
-    }
-});
-
-mobileToggle.addEventListener('click', () => {
-    navLinks.style.display = navLinks.style.display === 'none' ? 'flex' : 'none';
-    navLinks.style.flexDirection = 'column';
-    navLinks.style.position = 'absolute';
-    navLinks.style.top = '100%';
-    navLinks.style.left = '0';
-    navLinks.style.width = '100%';
-    navLinks.style.background = 'rgba(15, 20, 25, 0.95)';
-    navLinks.style.padding = '1rem';
-    navLinks.style.borderBottom = '1px solid var(--border)';
-});
-
-document.querySelector('.nav-container').appendChild(mobileToggle);
 
 // Add keyboard navigation
 document.addEventListener('keydown', (e) => {
