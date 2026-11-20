@@ -10,22 +10,49 @@
     <!-- Navigasi -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">CR</a></div>
+            <a href="index.html" class="logo" aria-label="Cristo Denata — beranda">
+                <span class="logo-text">CR</span>
+                <span class="logo-dot" aria-hidden="true"></span>
+            </a>
             <ul class="nav-links">
+                <li class="nav-indicator" aria-hidden="true"></li>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="index.html#about" class="nav-link">About</a></li>
                 <li><a href="index.html#skills" class="nav-link">Skills</a></li>
                 <li><a href="index.html#projects" class="nav-link">Projects</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-                <li><a href="achievements.html" class="nav-link active">Prestasi</a></li>
+                <li><a href="achievements.html" class="nav-link nav-cta active">Prestasi <span class="cta-arrow" aria-hidden="true">↗</span></a></li>
             </ul>
-            <button class="hamburger" aria-label="Buka menu navigasi" aria-expanded="false">
+            <button class="hamburger" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobileMenu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
         </div>
     </nav>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <span class="mobile-menu-mark" aria-hidden="true">CR</span>
+        <div class="mobile-menu-inner">
+            <p class="mobile-menu-label"><span class="label-line"></span>Menu</p>
+            <nav class="mobile-nav" aria-label="Navigasi seluler">
+                <a href="index.html" class="mobile-link"><span class="mobile-num">01</span><span class="mobile-text">Home</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+                <a href="index.html#about" class="mobile-link"><span class="mobile-num">02</span><span class="mobile-text">About</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+                <a href="index.html#skills" class="mobile-link"><span class="mobile-num">03</span><span class="mobile-text">Skills</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+                <a href="index.html#projects" class="mobile-link"><span class="mobile-num">04</span><span class="mobile-text">Projects</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+                <a href="index.html#contact" class="mobile-link"><span class="mobile-num">05</span><span class="mobile-text">Contact</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+                <a href="achievements.html" class="mobile-link active"><span class="mobile-num">06</span><span class="mobile-text">Prestasi</span><span class="mobile-arrow" aria-hidden="true">↗</span></a>
+            </nav>
+            <div class="mobile-menu-foot">
+                <p class="mobile-status"><span class="status-dot" aria-hidden="true"></span>Open for collaboration</p>
+                <a class="mobile-mail" href="mailto:cristodenata1286@gmail.com">cristodenata1286@gmail.com</a>
+                <div class="mobile-socials">
+                    <a href="https://github.com/CristoDenata" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.instagram.com/_denataaa" target="_blank" rel="noopener">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Header -->
     <section class="achievements-hero">

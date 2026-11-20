@@ -294,44 +294,89 @@ document.querySelectorAll('.stat').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-// Mobile menu toggle (hamburger)
-const navLinks = document.querySelector('.nav-links');
-const hamburger = document.querySelector('.hamburger');
 
-if (hamburger && navLinks) {
-    const closeMenu = () => {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
+// Sliding Pill Indicator & Mobile Menu Controller
+document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.querySelector(".navbar .nav-links");
+    const indicator = document.querySelector(".nav-indicator");
+    const links = document.querySelectorAll(".navbar .nav-link");
+
+    const updateIndicator = (activeLink) => {
+        if (!indicator || !activeLink || !nav) return;
+        const navRect = nav.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        const left = linkRect.left - navRect.left;
+        const width = linkRect.width;
+
+        indicator.style.transform = `translate3d(${left}px, -50%, 0)`;
+        indicator.style.width = `${width}px`;
+        indicator.classList.add("visible");
     };
 
-    hamburger.addEventListener('click', (e) => {
+    const currentActive = document.querySelector(".navbar .nav-link.active");
+    if (currentActive) {
+        updateIndicator(currentActive);
+    }
+
+    links.forEach(link => {
+        link.addEventListener("mouseenter", () => updateIndicator(link));
+        link.addEventListener("click", (e) => {
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+            updateIndicator(link);
+        });
+    });
+
+    if (nav) {
+        nav.addEventListener("mouseleave", () => {
+            const active = document.querySelector(".navbar .nav-link.active");
+            if (active) updateIndicator(active);
+        });
+    }
+});
+
+// Advanced Mobile Menu Controller
+const mobileMenu = document.getElementById("mobileMenu");
+const hamburger = document.querySelector(".hamburger");
+
+if (mobileMenu && hamburger) {
+    const setMobileMenu = (open) => {
+        mobileMenu.classList.toggle("open", open);
+        hamburger.classList.toggle("active", open);
+        hamburger.setAttribute("aria-expanded", String(open));
+        mobileMenu.setAttribute("aria-hidden", String(!open));
+        document.body.style.overflow = open ? "hidden" : "";
+    };
+
+    hamburger.addEventListener("click", (e) => {
         e.stopPropagation();
-        const isOpen = navLinks.classList.toggle('open');
-        hamburger.classList.toggle('active', isOpen);
-        hamburger.setAttribute('aria-expanded', String(isOpen));
+        const isOpen = !mobileMenu.classList.contains("open");
+        setMobileMenu(isOpen);
     });
 
-    // Tutup menu setelah link diklik
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
+    // Assign stagger indexes
+    mobileMenu.querySelectorAll(".mobile-link").forEach((link, i) => {
+        link.style.setProperty("--i", i);
+        link.addEventListener("click", () => setMobileMenu(false));
     });
 
-    // Klik di luar menu menutup menu
-    document.addEventListener('click', (e) => {
-        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-            closeMenu();
+    document.addEventListener("click", (e) => {
+        if (mobileMenu.classList.contains("open") && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            setMobileMenu(false);
         }
     });
 
-    // Reset saat resize ke desktop
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) closeMenu();
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileMenu.classList.contains("open")) {
+            setMobileMenu(false);
+            hamburger.focus();
+        }
     });
 
-    // Tutup dengan tombol Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMenu();
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768 && mobileMenu.classList.contains("open")) {
+            setMobileMenu(false);
+        }
     });
 }
 
