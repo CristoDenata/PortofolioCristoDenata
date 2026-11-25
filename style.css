@@ -464,6 +464,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .btn-primary {
@@ -577,6 +580,7 @@ body {
     transform: translateX(-50%);
     animation: bounce 2s infinite;
     color: var(--accent-light);
+    z-index: 10;
 }
 
 @keyframes bounce {
@@ -882,6 +886,247 @@ section {
     gap: 0.7rem;
     transform: translateX(5px);
     text-shadow: 0 0 10px rgba(74, 159, 159, 0.5);
+}
+
+/* ============================================================
+   AE-STYLE ENHANCEMENTS — glassmorphism, blobs, gradient mesh
+   ============================================================ */
+
+:root {
+    --glow-teal: #4a9f9f;
+    --glow-gold: #c4a47a;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Utility: kaca / glassmorphism */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--glass-border);
+}
+
+/* Gradient border animasi */
+.gradient-border {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--glow-teal), var(--glow-gold), #5f4b8b, var(--glow-teal));
+    background-size: 300% 300%;
+    animation: gradientMove 6s ease infinite;
+    opacity: 0.6;
+    filter: blur(12px);
+}
+.gradient-border::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: #0f1419;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Blob melayang di belakang section */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+    z-index: -1;
+    animation: float 12s ease-in-out infinite;
+}
+.blob-1 {
+    top: -10%; left: -10%;
+    width: 600px; height: 600px;
+    background: var(--glow-teal);
+    animation-duration: 14s;
+    animation-delay: -2s;
+}
+.blob-2 {
+    bottom: -15%; right: -10%;
+    width: 700px; height: 700px;
+    background: var(--glow-gold);
+    animation-duration: 16s;
+    animation-delay: -4s;
+}
+.blob-3 {
+    top: 40%; left: 50%;
+    width: 400px; height: 400px;
+    background: #5f4b8b;
+    animation-duration: 10s;
+    animation-delay: -1s;
+}
+
+/* Hero enhanced: gradient mesh yang bergerak lambat */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(58, 127, 127, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(139, 111, 79, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(95, 75, 139, 0.08) 0%, transparent 50%);
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    z-index: 1;
+    background: linear-gradient(to bottom, transparent 0%, rgba(15, 20, 25, 0.85) 60%, #0f1419 100%);
+    pointer-events: none;
+}
+
+/* Teks reveal saat scroll */
+.reveal-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card tilt container */
+.tilt-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Button shimmer */
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.btn:hover::before {
+    transform: translateX(100%);
+}
+
+/* Section divider gelombang */
+.wave-divider {
+    position: relative;
+    overflow: hidden;
+}
+.wave-divider::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -1px; right: 0;
+    height: 60px;
+    background: linear-gradient(135deg, #0f1419 0%, #0f1419 40%, transparent 100%);
+    mask-image: radial-gradient(circle at 50% 100%, #000 70%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Navbar lebih kaca */
+.navbar {
+    background: rgba(15, 20, 25, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Mobile menu: slide dari kanan dengan blur */
+.mobile-menu {
+    background: radial-gradient(circle at 80% 10%, rgba(58, 127, 127, 0.18) 0%, rgba(15, 20, 25, 0.98) 70%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+.mobile-link {
+    position: relative;
+    overflow: hidden;
+}
+.mobile-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+.mobile-link:hover::before {
+    transform: translateX(100%);
+}
+
+/* Skill cards glass */
+.skill-card {
+    background: rgba(26, 31, 46, 0.6);
+    border: 1px solid var(--glass-border);
+}
+.skill-card:hover {
+    background: rgba(26, 31, 46, 0.85);
+    border-color: var(--glow-teal);
+    box-shadow: 0 0 40px rgba(74, 159, 159, 0.15);
+}
+
+/* Project cards glass + tilt */
+.project-card {
+    background: rgba(26, 31, 46, 0.6);
+    border: 1px solid var(--glass-border);
+}
+.project-card:hover {
+    border-color: var(--glow-teal);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+}
+
+/* Floating cards hero lebih lebay */
+.floating-card {
+    background: rgba(26, 31, 46, 0.55);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+}
+
+/* Stats glass */
+.stat {
+    background: rgba(26, 31, 46, 0.4);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+.stat:hover {
+    border-color: var(--glow-gold);
+    transform: translateY(-5px);
+}
+
+/* Contact card glass */
+.contact-card {
+    background: rgba(26, 31, 46, 0.5);
+    border: 1px solid var(--glass-border);
+}
+
+/* Footer glass */
+.footer {
+    background: rgba(15, 20, 25, 0.85);
+    backdrop-filter: blur(12px);
+}
+
+/* Responsive tweaks agar blob tidak ganggu mobile */
+@media (max-width: 768px) {
+    .blob { display: none; }
+    .hero::before { opacity: 0.6; }
 }
 
 /* ============================================================

@@ -96,13 +96,44 @@ if (heroVisual) {
     document.addEventListener('mousemove', (e) => {
         const x = (window.innerWidth / 2 - e.clientX) / 50;
         const y = (window.innerHeight / 2 - e.clientY) / 50;
-        
+
         floatingCards.forEach((card, index) => {
             const depth = (index + 1) * 0.5;
             card.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
         });
     });
 }
+
+// 3D Tilt effect pada project & skill cards
+document.querySelectorAll('.project-card, .skill-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    });
+});
+
+// Teks reveal saat scroll
+const textRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.section-title, .about-text h3, .contact-content > p, .achievement-card').forEach(el => {
+    el.classList.add('reveal-text');
+    textRevealObserver.observe(el);
+});
 
 // Cursor trail effect
 const cursorTrail = document.createElement('div');
