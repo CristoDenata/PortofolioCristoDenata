@@ -737,21 +737,21 @@ section {
 .photo-stack:hover .photo-card-3,
 .photo-stack.is-open .photo-card-3,
 .photo-stack:focus-visible .photo-card-3 {
-    transform: translateX(-42%) translateY(6%) rotate(-11deg) scale(0.55);
+    transform: translateX(-42%) translateY(-22%) rotate(-11deg) scale(0.55);
     box-shadow: 0 30px 65px rgba(0, 0, 0, 0.5);
 }
 
 .photo-stack:hover .photo-card-2,
 .photo-stack.is-open .photo-card-2,
 .photo-stack:focus-visible .photo-card-2 {
-    transform: translateY(-14px) scale(0.6);
+    transform: translateY(-20%) scale(0.6);
     box-shadow: 0 30px 65px rgba(0, 0, 0, 0.5);
 }
 
 .photo-stack:hover .photo-card-1,
 .photo-stack.is-open .photo-card-1,
 .photo-stack:focus-visible .photo-card-1 {
-    transform: translateX(42%) translateY(6%) rotate(11deg) scale(0.55);
+    transform: translateX(42%) translateY(-22%) rotate(11deg) scale(0.55);
     box-shadow: 0 30px 65px rgba(0, 0, 0, 0.5);
 }
 
@@ -777,15 +777,15 @@ section {
     }
     .photo-stack:hover .photo-card-3,
     .photo-stack.is-open .photo-card-3 {
-        transform: translateX(-36%) translateY(5%) rotate(-10deg) scale(0.5);
+        transform: translateX(-36%) translateY(-25%) rotate(-10deg) scale(0.5);
     }
     .photo-stack:hover .photo-card-2,
     .photo-stack.is-open .photo-card-2 {
-        transform: translateY(-12px) scale(0.55);
+        transform: translateY(-23%) scale(0.55);
     }
     .photo-stack:hover .photo-card-1,
     .photo-stack.is-open .photo-card-1 {
-        transform: translateX(36%) translateY(5%) rotate(10deg) scale(0.5);
+        transform: translateX(36%) translateY(-25%) rotate(10deg) scale(0.5);
     }
 }
 
