@@ -411,18 +411,44 @@ if (mobileMenu && hamburger) {
     });
 }
 
-// Add keyboard navigation
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
     const navLinksAll = document.querySelectorAll('.nav-link');
     const currentActive = document.querySelector('.nav-link.active');
     let currentIndex = Array.from(navLinksAll).indexOf(currentActive);
-    
+   
     if (e.key === 'ArrowRight' && currentIndex < navLinksAll.length - 1) {
         navLinksAll[currentIndex + 1].click();
     } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
         navLinksAll[currentIndex - 1].click();
     }
 });
+
+// Toggle stacked photos (Tentang Saya) saat diklik / tombol keyboard
+const photoStack = document.querySelector('.photo-stack');
+if (photoStack) {
+    photoStack.setAttribute('tabindex', '0');
+    photoStack.setAttribute('role', 'button');
+    photoStack.setAttribute('aria-label', 'Klik untuk melihat semua foto');
+
+    photoStack.addEventListener('click', () => {
+        photoStack.classList.toggle('is-open');
+    });
+
+    photoStack.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            photoStack.classList.toggle('is-open');
+        }
+    });
+
+    // Tutup saat klik di luar stack foto
+    document.addEventListener('click', (e) => {
+        if (photoStack.classList.contains('is-open') && !photoStack.contains(e.target)) {
+            photoStack.classList.remove('is-open');
+        }
+    });
+}
 
 // Loading animation
 window.addEventListener('load', () => {
